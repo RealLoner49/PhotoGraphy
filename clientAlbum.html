@@ -2,57 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Client Albums | Charlotte McCoy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/clientAlbum.css">
+  <title>Client Albums | Charlotte McCoy</title>
+  <link rel="stylesheet" href="./clientAlbum.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
-
+<div class="page-loader" id="pageLoader" role="status" aria-live="polite" aria-label="Loading website">
+  <div class="page-loader__mark">CM</div>
+  <div class="page-loader__line"></div>
+  <span>Loading</span>
+</div>
+<script>
+  (function () {
+    var loader = document.getElementById('pageLoader');
+    function finishLoading() {
+      window.setTimeout(function () {
+        loader.classList.add('is-hidden');
+        window.setTimeout(function () { loader.remove(); }, 450);
+      }, 2500);
+    }
+    if (document.readyState === 'complete') finishLoading();
+    else window.addEventListener('load', finishLoading, { once: true });
+  }());
+</script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    // Mobile Menu Toggle
     const menuToggle = document.getElementById("menuToggle");
     const navLinks = document.getElementById("navLinks");
-    
-    if (menuToggle) {
+    if (menuToggle && navLinks) {
       menuToggle.addEventListener("click", () => {
         navLinks.classList.toggle("active");
         menuToggle.classList.toggle("active");
+        document.body.classList.toggle("nav-open");
+      });
+      navLinks.querySelectorAll("a").forEach((item) => {
+        item.addEventListener("click", () => {
+          navLinks.classList.remove("active");
+          menuToggle.classList.remove("active");
+          document.body.classList.remove("nav-open");
+        });
       });
     }
-    
-    // Close menu when a link is clicked
-    const navItems = navLinks.querySelectorAll("a");
-    navItems.forEach(item => {
-      item.addEventListener("click", () => {
-        navLinks.classList.remove("active");
-        menuToggle.classList.remove("active");
-      });
-    });
 
-    // Back to Top Button
+    const navbar = document.querySelector(".navbar");
+    if (navbar) {
+      const toggleNavbar = () => {
+        navbar.classList.toggle("scrolled", window.scrollY > 10);
+      };
+      window.addEventListener("scroll", toggleNavbar, { passive: true });
+      toggleNavbar();
+    }
+
     const backToTopBtn = document.getElementById("backToTopBtn");
     if (backToTopBtn) {
-      window.addEventListener("scroll", () => {
-        const isMobile = window.innerWidth <= 768;
-        if (window.pageYOffset > 300 && isMobile) {
+      const toggleBackToTop = () => {
+        if (window.scrollY > 300) {
           backToTopBtn.style.display = "flex";
         } else {
           backToTopBtn.style.display = "none";
         }
-      });
-
-      window.addEventListener("resize", () => {
-        const isMobile = window.innerWidth <= 768;
-        if (window.pageYOffset > 300 && isMobile) {
-          backToTopBtn.style.display = "flex";
-        } else {
-          backToTopBtn.style.display = "none";
-        }
-      });
-
+      };
+      window.addEventListener("scroll", toggleBackToTop);
+      window.addEventListener("resize", toggleBackToTop);
+      toggleBackToTop();
       backToTopBtn.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
@@ -60,117 +73,110 @@
   });
 </script>
 
-<!-- NAVBAR -->
-  <header>
-    <nav class="navbar">
-      <div class="nav-container">
-        <div class="logo">CM Photography</div>
-        <div class="menu-toggle" id="menuToggle">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+<header>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a class="logo" href="./index.html">CM Photography</a>
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./index.html#About">About</a></li>
-        <li><a href="./index.html#Portfolio">Portfolio</a></li>
-        <li><a href="./index.html#Contact">Contact</a></li>
-        <li><a class="active" href="./clientAlbum.html">Client Albums</a></li>
-        <li><a href="./bookOnilne.html">Book Online</a></li>
-      </ul>
-    </nav>
-  </header>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./index.html#About">About</a></li>
+      <li><a href="./index.html#Portfolio">Portfolio</a></li>
+      <li><a href="./index.html#Contact">Contact</a></li>
+      <li><a href="./services.html">Services</a></li>
+      <li><a class="active" href="./clientAlbum.html">Client Albums</a></li>
+      <li><a href="./bookOnilne.html">Book Online</a></li>
+    </ul>
+  </nav>
+</header>
 
-<!-- PAGE HEADER -->
 <section class="page-header">
-  <h1>Client Albums</h1>
-  <p>Private collections crafted with emotion and intention.
-     These are more than galleries,
-     They are private collections of love, connection, and celebration.
-  </p>
+  <div class="page-header-content">
+    <span class="section-label light">Private collections</span>
+    <h1>Client Albums</h1>
+    <p>Thoughtfully curated galleries designed to preserve the emotion, beauty, and intimacy of your celebration.</p>
+  </div>
 </section>
 
-<!-- IMAGE GRID -->
-<!-- IMAGE GRID -->
 <section class="albums-grid">
-
-  <!-- ROW 1 -->
   <div class="album-tile tall">
-    <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753790704/5_rr5jf1.jpg">
-    <span>Rachel & Sam</span>
+    <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_900/v1753790704/5_rr5jf1.jpg" alt="Rachel & Sam" loading="lazy" decoding="async">
+    <div class="album-overlay"><span>Rachel & Sam</span></div>
   </div>
 
   <div class="album-tile">
-    <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753790784/13_fl5cim.jpg">
-    <span>Joshua & Ashley</span>
+    <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_900/v1753790784/13_fl5cim.jpg" alt="Joshua & Ashley" loading="lazy" decoding="async">
+    <div class="album-overlay"><span>Joshua & Ashley</span></div>
   </div>
 
   <div class="album-tile wide">
-    <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753792302/35_qdtgf3.jpg">
-    <span>Lynn & Richard</span>
+    <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_1200/v1753792302/35_qdtgf3.jpg" alt="Lynn & Richard" loading="lazy" decoding="async">
+    <div class="album-overlay"><span>Lynn & Richard</span></div>
   </div>
 
-  <!-- ROW 2 -->
   <div class="album-tile">
-    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e">
-    <span>Wedding Moments</span>
+    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=900&q=75" alt="Wedding Moments" loading="lazy" decoding="async">
+    <div class="album-overlay"><span>Wedding Moments</span></div>
   </div>
 
   <div class="album-tile tall">
-    <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf">
-    <span>Engagement</span>
+    <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=900&q=75" alt="Engagement" loading="lazy" decoding="async">
+    <div class="album-overlay"><span>Engagement</span></div>
   </div>
 
   <div class="album-tile">
-    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
-    <span>Ceremony</span>
+    <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=75" alt="Ceremony" loading="lazy" decoding="async">
+    <div class="album-overlay"><span>Ceremony</span></div>
   </div>
 
-  <!-- ROW 3 -->
   <div class="album-tile wide">
-    <img src="https://images.unsplash.com/photo-1519741497674-611481863552">
-    <span>Reception</span>
+    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=75" alt="Reception" loading="lazy" decoding="async">
+    <div class="album-overlay"><span>Reception</span></div>
   </div>
 
   <div class="album-tile">
-    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9">
-    <span>First Dance</span>
+    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=900&q=75" alt="First Dance" loading="lazy" decoding="async">
+    <div class="album-overlay"><span>First Dance</span></div>
   </div>
 
   <div class="album-tile tall">
-    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9">
-    <span>Quiet Moments</span>
+    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=75" alt="Quiet Moments" loading="lazy" decoding="async">
+    <div class="album-overlay"><span>Quiet Moments</span></div>
   </div>
 
-  <!-- ROW 4 -->
   <div class="album-tile">
-    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330">
-    <span>Bridal Portrait</span>
+    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=75" alt="Bridal Portrait" loading="lazy" decoding="async">
+    <div class="album-overlay"><span>Bridal Portrait</span></div>
   </div>
 
   <div class="album-tile wide">
-    <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429">
-    <span>Celebration</span>
+    <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=75" alt="Celebration" loading="lazy" decoding="async">
+    <div class="album-overlay"><span>Celebration</span></div>
   </div>
 
   <div class="album-tile">
-    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1">
-    <span>Couple Session</span>
+    <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=75" alt="Couple Session" loading="lazy" decoding="async">
+    <div class="album-overlay"><span>Couple Session</span></div>
   </div>
-
 </section>
 
-
-<!-- FOOTER -->
-<footer class="footer">
-  <p>© 2035 Charlotte McCoy Photography</p>
+<footer class="site-footer">
+  <div class="footer-top">
+    <h2 class="footer-brand">CHARLOTTE McCOY</h2>
+    <p class="footer-tagline">Wedding Photography • Timeless • Emotion • Story</p>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2035 Charlotte McCoy Photography</p>
+  </div>
 </footer>
 
-<!-- Back to Top Button -->
 <button id="backToTopBtn" class="back-to-top" aria-label="Back to top">
   <i class="fas fa-arrow-up"></i>
 </button>
-
 </body>
 </html>

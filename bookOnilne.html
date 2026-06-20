@@ -2,34 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Book a Session | Charlotte McCoy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/bookOnline.css">
+  <title>Book a Session | Charlotte McCoy</title>
+  <link rel="stylesheet" href="./bookOnline.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
+<body>
+<div class="page-loader" id="pageLoader" role="status" aria-live="polite" aria-label="Loading website">
+  <div class="page-loader__mark">CM</div>
+  <div class="page-loader__line"></div>
+  <span>Loading</span>
+</div>
+<script>
+  (function () {
+    var loader = document.getElementById('pageLoader');
+    function finishLoading() {
+      window.setTimeout(function () {
+        loader.classList.add('is-hidden');
+        window.setTimeout(function () { loader.remove(); }, 450);
+      }, 2500);
+    }
+    if (document.readyState === 'complete') finishLoading();
+    else window.addEventListener('load', finishLoading, { once: true });
+  }());
+</script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    // Mobile Menu Toggle
     const menuToggle = document.getElementById("menuToggle");
     const navLinks = document.getElementById("navLinks");
-    
-    if (menuToggle) {
+    if (menuToggle && navLinks) {
       menuToggle.addEventListener("click", () => {
         navLinks.classList.toggle("active");
         menuToggle.classList.toggle("active");
+        document.body.classList.toggle("nav-open");
+      });
+      navLinks.querySelectorAll("a").forEach((item) => {
+        item.addEventListener("click", () => {
+          navLinks.classList.remove("active");
+          menuToggle.classList.remove("active");
+          document.body.classList.remove("nav-open");
+        });
       });
     }
-    
-    // Close menu when a link is clicked
-    const navItems = navLinks.querySelectorAll("a");
-    navItems.forEach(item => {
-      item.addEventListener("click", () => {
-        navLinks.classList.remove("active");
-        menuToggle.classList.remove("active");
-      });
-    });
-    
+
+    const navbar = document.querySelector(".navbar");
+    if (navbar) {
+      const toggleNavbar = () => {
+        navbar.classList.toggle("scrolled", window.scrollY > 10);
+      };
+      window.addEventListener("scroll", toggleNavbar, { passive: true });
+      toggleNavbar();
+    }
+
     const form = document.getElementById("bookingForm");
     const selectedPlanInput = document.getElementById("selectedPlan");
     const toast = document.getElementById("toast");
@@ -43,72 +67,47 @@
 
     window.selectPlan = function (planName) {
       selectedPlanInput.value = planName;
-
       showToast(`✔ ${planName} selected. Please complete the form.`);
-
-      document
-        .getElementById("bookingFormSection")
-        .scrollIntoView({ behavior: "smooth" });
+      document.getElementById("bookingFormSection").scrollIntoView({ behavior: "smooth" });
     };
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault(); // 🚫 THIS STOPS FORMSPREE PAGE
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (!selectedPlanInput.value) {
+          showToast("⚠ Please select a plan before confirming.");
+          document.getElementById("plansSection").scrollIntoView({ behavior: "smooth" });
+          return;
+        }
+        const formData = new FormData(form);
+        try {
+          const res = await fetch(form.action, { method: "POST", body: formData, headers: { Accept: "application/json" } });
+          if (!res.ok) throw new Error("Failed");
+          form.reset();
+          selectedPlanInput.value = "";
+          status.textContent = "✔ Booking sent successfully. We’ll contact you soon.";
+          status.style.color = "#1a7f5a";
+          showToast("🎉 Booking sent successfully!");
+        } catch (err) {
+          status.textContent = "❌ Failed to send. Try again.";
+          status.style.color = "#b42318";
+          showToast("❌ Something went wrong.");
+        }
+      });
+    }
 
-      if (!selectedPlanInput.value) {
-        showToast("⚠ Please select a plan before confirming.");
-        document
-          .getElementById("plansSection")
-          .scrollIntoView({ behavior: "smooth" });
-        return;
-      }
-
-      const formData = new FormData(form);
-
-      try {
-        const res = await fetch(form.action, {
-          method: "POST",
-          body: formData,
-          headers: { Accept: "application/json" },
-        });
-
-        if (!res.ok) throw new Error("Failed");
-
-        form.reset();
-        selectedPlanInput.value = "";
-
-        status.textContent =
-          "✔ Booking sent successfully. We’ll contact you soon.";
-        status.style.color = "green";
-
-        showToast("🎉 Booking sent successfully!");
-      } catch (err) {
-        status.textContent = "❌ Failed to send. Try again.";
-        status.style.color = "red";
-        showToast("❌ Something went wrong.");
-      }
-    });
-
-    // Back to Top Button
     const backToTopBtn = document.getElementById("backToTopBtn");
     if (backToTopBtn) {
-      window.addEventListener("scroll", () => {
-        const isMobile = window.innerWidth <= 768;
-        if (window.pageYOffset > 300 && isMobile) {
+      const toggleBackToTop = () => {
+        if (window.scrollY > 300) {
           backToTopBtn.style.display = "flex";
         } else {
           backToTopBtn.style.display = "none";
         }
-      });
-
-      window.addEventListener("resize", () => {
-        const isMobile = window.innerWidth <= 768;
-        if (window.pageYOffset > 300 && isMobile) {
-          backToTopBtn.style.display = "flex";
-        } else {
-          backToTopBtn.style.display = "none";
-        }
-      });
-
+      };
+      window.addEventListener("scroll", toggleBackToTop);
+      window.addEventListener("resize", toggleBackToTop);
+      toggleBackToTop();
       backToTopBtn.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
@@ -116,144 +115,126 @@
   });
 </script>
 
-
-
-<!-- TOAST -->
 <div id="toast" class="toast hidden">
   <span id="toast-icon">⚠</span>
   <span id="toast-message">Toast message</span>
 </div>
 
-
-
-<body>
-  <!-- Navbar  -->
-  <header>
-    <nav class="navbar">
-      <div class="nav-container">
-        <div class="logo">CM Photography</div>
-        <div class="menu-toggle" id="menuToggle">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+<header>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a class="logo" href="./index.html">CM Photography</a>
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
       </div>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./index.html#About">About</a></li>
-        <li><a href="./index.html#Portfolio">Portfolio</a></li>
-        <li><a href="./index.html#Contact">Contact</a></li>
-        <li><a href="./clientAlbum.html">Client Albums</a></li>
-        <li><a class="active" href="./bookOnilne.html">Book Online</a></li>
-      </ul>
-    </nav>
-  </header>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./index.html#About">About</a></li>
+      <li><a href="./index.html#Portfolio">Portfolio</a></li>
+      <li><a href="./index.html#Contact">Contact</a></li>
+      <li><a href="./services.html">Services</a></li>
+      <li><a href="./clientAlbum.html">Client Albums</a></li>
+      <li><a class="active" href="./bookOnilne.html">Book Online</a></li>
+    </ul>
+  </nav>
+</header>
 
-<!-- HERO -->
 <section class="booking-hero">
   <div class="hero-content">
+    <span class="section-label light">Availability</span>
     <h1>Book Your Session</h1>
-    <p>Secure your date. Let us capture the moment.</p>
+    <p>Reserve your date and let us create something unforgettable.</p>
   </div>
 </section>
 
-<!-- PLANS -->
-<section class="plans" id="plan">
-  <h2>Our Plans</h2>
-
+<section class="plans" id="plansSection">
+  <div class="plans-header">
+    <span class="section-label">Packages</span>
+    <h2>Choose your experience</h2>
+  </div>
   <div class="plan-grid">
-    <div class="plan-card">
+    <article class="plan-card">
+      <p class="package-label">Signature</p>
       <h3>McCoy Go</h3>
-      <p class="price">₦50,000</p>
+      <p class="price">Custom quote</p>
       <ul>
-        <li>50 Edited Photos</li>
-        <li>Standard Quality</li>
-        <li>JPG Format</li>
-        <li>1 Hour Coverage</li>
+        <li>50 edited photos</li>
+        <li>1 hour coverage</li>
+        <li>Online gallery</li>
       </ul>
-      <button onclick="selectPlan('McCoy Go')">SELECT PLAN</button>
-    </div>
-
-    <div class="plan-card featured">
+      <button onclick="selectPlan('McCoy Go')">Select plan</button>
+    </article>
+    <article class="plan-card featured">
+      <p class="package-label">Most Popular</p>
       <h3>McCoy Pro</h3>
-      <p class="price">₦120,000</p>
+      <p class="price">Tailored proposal</p>
       <ul>
-        <li>120 Edited Photos</li>
-        <li>High Resolution</li>
-        <li>JPG + RAW</li>
-        <li>3 Hours Coverage</li>
+        <li>120 edited photos</li>
+        <li>3 hours coverage</li>
+        <li>High-resolution delivery</li>
       </ul>
-      <button onclick="selectPlan('McCoy Pro')">SELECT PLAN</button>
-    </div>
-
-    <div class="plan-card">
+      <button onclick="selectPlan('McCoy Pro')">Select plan</button>
+    </article>
+    <article class="plan-card">
+      <p class="package-label">Luxury</p>
       <h3>McCoy Elite</h3>
-      <p class="price">₦250,000</p>
+      <p class="price">On request</p>
       <ul>
-        <li>Unlimited Photos</li>
-        <li>Ultra HD + FPS</li>
-        <li>JPG + RAW + Video</li>
-        <li>Full Event Coverage</li>
+        <li>Unlimited edited photos</li>
+        <li>Full-day coverage</li>
+        <li>RAW + JPG + video add-on</li>
       </ul>
-      <button onclick="selectPlan('McCoy Elite')">SELECT PLAN</button>
-    </div>
+      <button onclick="selectPlan('McCoy Elite')">Select plan</button>
+    </article>
   </div>
 </section>
 
-<!-- BOOKING FORM -->
 <section class="booking-form" id="bookingFormSection">
-  <h2>Session Details</h2>
-
- <form 
-  id="bookingForm"
-  action="https://formspree.io/f/xaqenvjb"
-  method="POST"
->
-
-  <!-- HIDDEN: SELECTED PLAN -->
-  <input type="hidden" name="Selected Plan" id="selectedPlan">
-
-  <div class="form-group">
-    <input type="text" name="Full Name" placeholder="Full Name" required>
-    <input type="email" name="Email" placeholder="Email Address" required>
+  <div class="booking-form-panel">
+    <div class="booking-form-header">
+      <span class="section-label">Inquiry</span>
+      <h2>Session details</h2>
+    </div>
+    <form id="bookingForm" action="https://formspree.io/f/xaqenvjb" method="POST">
+      <input type="hidden" name="Selected Plan" id="selectedPlan">
+      <div class="form-group">
+        <input type="text" name="Full Name" placeholder="Full Name" required>
+        <input type="email" name="Email" placeholder="Email Address" required>
+      </div>
+      <div class="form-group">
+        <input type="tel" name="Phone" placeholder="Phone Number" required>
+        <input type="text" name="Event Type" placeholder="Event Type">
+      </div>
+      <div class="form-group">
+        <input type="date" name="Event Date" required>
+        <input type="time" name="Event Time" required>
+      </div>
+      <div class="form-group">
+        <input type="text" name="Location" placeholder="Event Location">
+        <input type="number" name="Guests" placeholder="Estimated Guests">
+      </div>
+      <textarea name="Message" placeholder="Special Requests / Notes"></textarea>
+      <button type="submit" class="submit-btn">Confirm Booking</button>
+      <p id="formStatus" class="success-msg"></p>
+    </form>
   </div>
-
-  <div class="form-group">
-    <input type="tel" name="Phone" placeholder="Phone Number" required>
-    <input type="text" name="Event Type" placeholder="Event Type (Wedding, Birthday)">
-  </div>
-
-  <div class="form-group">
-    <input type="date" name="Event Date" required>
-    <input type="time" name="Event Time" required>
-  </div>
-
-  <div class="form-group">
-    <input type="text" name="Location" placeholder="Event Location">
-    <input type="number" name="Guests" placeholder="Number of Guests">
-  </div>
-
-  <textarea name="Message" placeholder="Special Requests / Notes"></textarea>
-
-  <button type="submit" class="submit-btn">
-    Confirm Booking
-  </button>
-
-  <!-- SUCCESS MESSAGE -->
-  <p id="formStatus" class="success-msg"></p>
-</form>
-
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <p>© 2035 Charlotte McCoy Photography</p>
+<footer class="site-footer">
+  <div class="footer-top">
+    <h2 class="footer-brand">CHARLOTTE McCOY</h2>
+    <p class="footer-tagline">Wedding Photography • Timeless • Emotional • Honest</p>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2035 Charlotte McCoy Photography</p>
+  </div>
 </footer>
 
-<!-- Back to Top Button -->
 <button id="backToTopBtn" class="back-to-top" aria-label="Back to top">
   <i class="fas fa-arrow-up"></i>
 </button>
-
 </body>
 </html>

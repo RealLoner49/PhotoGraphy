@@ -1,122 +1,54 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Charlotte McCoy | Wedding Photography</title>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="./index.css">
+  <link rel="preload" as="image" fetchpriority="high" href="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_1920/v1753790716/12_ljo64h.jpg">
 </head>
-
 <body>
-
+  <div class="page-loader" id="pageLoader" role="status" aria-live="polite" aria-label="Loading website">
+    <div class="page-loader__mark">CM</div>
+    <div class="page-loader__line"></div>
+    <span>Loading</span>
+  </div>
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Mobile Menu Toggle
-      const menuToggle = document.getElementById("menuToggle");
-      const navLinks = document.getElementById("navLinks");
-      
-      if (menuToggle) {
-        menuToggle.addEventListener("click", () => {
-          navLinks.classList.toggle("active");
-          menuToggle.classList.toggle("active");
-        });
+    (function () {
+      var loader = document.getElementById('pageLoader');
+      function finishLoading() {
+        window.setTimeout(function () {
+          loader.classList.add('is-hidden');
+          window.setTimeout(function () { loader.remove(); }, 450);
+        }, 2500);
       }
-      
-      // Close menu when a link is clicked
-      const navItems = navLinks.querySelectorAll("a");
-      navItems.forEach(item => {
-        item.addEventListener("click", () => {
-          navLinks.classList.remove("active");
-          menuToggle.classList.remove("active");
-        });
-      });
-
-      // Contact Form Handler
-      const contactForm = document.getElementById("contactForm");
-      if (contactForm) {
-        contactForm.addEventListener("submit", async (e) => {
-          e.preventDefault();
-
-          const formData = new FormData(contactForm);
-          const successMsg = document.getElementById("successMsg");
-          const sendBtn = document.getElementById("sendBtn");
-
-          try {
-            const response = await fetch(contactForm.action, {
-              method: "POST",
-              body: formData,
-              headers: { Accept: "application/json" },
-            });
-
-            if (response.ok) {
-              contactForm.reset();
-              successMsg.style.display = "block";
-              sendBtn.textContent = "Message Sent!";
-              sendBtn.disabled = true;
-
-              setTimeout(() => {
-                successMsg.style.display = "none";
-                sendBtn.textContent = "Send Message";
-                sendBtn.disabled = false;
-              }, 4000);
-            } else {
-              alert("Something went wrong. Please try again.");
-            }
-          } catch (error) {
-            console.error("Error:", error);
-            alert("Failed to send message. Please try again.");
-          }
-        });
-      }
-
-      // Back to Top Button
-      const backToTopBtn = document.getElementById("backToTopBtn");
-      if (backToTopBtn) {
-        window.addEventListener("scroll", () => {
-          const isMobile = window.innerWidth <= 768;
-          if (window.pageYOffset > 300 && isMobile) {
-            backToTopBtn.style.display = "flex";
-          } else {
-            backToTopBtn.style.display = "none";
-          }
-        });
-
-        window.addEventListener("resize", () => {
-          const isMobile = window.innerWidth <= 768;
-          if (window.pageYOffset > 300 && isMobile) {
-            backToTopBtn.style.display = "flex";
-          } else {
-            backToTopBtn.style.display = "none";
-          }
-        });
-
-        backToTopBtn.addEventListener("click", () => {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-      }
-    });
+      if (document.readyState === 'complete') finishLoading();
+      else window.addEventListener('load', finishLoading, { once: true });
+    }());
   </script>
-
-  <!-- Social Icons (Fixed) -->
   <div class="social-icons">
-    <a href="https://facebook.com" target="_blank" aria-label="Tiktok"><i class="fa-brands fa-tiktok"></i></a>
-    <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-    <a href="https://wa.me/2348028084696" target="_blank" aria-label="Whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
     <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://twitter.com" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    <a href="https://wa.me/2348028084696" target="_blank" aria-label="Whatsapp"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
   </div>
 
-  <!-- Header and Hero Section -->
   <header>
     <nav class="navbar">
       <div class="nav-container">
-        <div class="logo">CM Photography</div>
-        <div class="menu-toggle" id="menuToggle">
-          <span></span>
-          <span></span>
-          <span></span>
+        <a class="logo" href="./index.html">CM Photography</a>
+        <div class="nav-actions">
+          <a class="nav-cta" href="./bookOnilne.html">Book now</a>
+          <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </div>
       <ul class="nav-links" id="navLinks">
@@ -124,180 +56,215 @@
         <li><a href="#About">About</a></li>
         <li><a href="#Portfolio">Portfolio</a></li>
         <li><a href="#Contact">Contact</a></li>
+        <li><a href="./services.html">Services</a></li>
         <li><a href="./clientAlbum.html">Client Albums</a></li>
         <li><a href="./bookOnilne.html">Book Online</a></li>
       </ul>
     </nav>
   </header>
 
-  <section class="hero">
-    <div class="hero-content">
-      <h1>CHARLOTTE McCOY</h1>
-      <hr class="divider">
-      <p>WEDDING PHOTOGRAPHY</p>
-      <p style="font-family: cursive;">Preserving stories that deserve to be remembered.</p>
-    </div>
-  </section>
+  <main>
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content" data-reveal>
+        <span class="section-label light">Editorial wedding photography</span>
+        <h1>CHARLOTTE McCOY</h1>
+        <p>Wedding photography for timeless love stories</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#Portfolio">View portfolio</a>
+          <a class="btn btn-secondary" href="./bookOnilne.html">Book a session</a>
+        </div>
+      </div>
+    </section>
 
-  <!-- About Section  -->
-  <section id="About" class="about-section">
-    <div class="about-image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753790776/21_srplns.webp" alt="Photographer" />
-    </div>
-    <div class="about-text">
-      <h1>About me</h1>
-      <hr />
-      <p>
-        At Charlotte McCoy Photography, we believe photography is about more than images.
-        It is about preserving feeling. The quiet moments. The unspoken connection. The beauty that exists between people when they are simply being themselves.
-        Photography is more than images.
-        It’s memory, emotion, and connection preserved in time.
-        At Charlotte McCoy Photography, we focus on telling your story naturally. No forced poses. No distractions. Just you, your people, and the moments that matter most.
-      </p>
-      <p>
-        Every couple, every family, every story is different. That is why we take the time to understand who you are, what matters to you, and how you want your story to be remembered. From the first conversation to the final delivery, we work with care, professionalism, and intention.
-      </p>
-      <p>
-       From quiet exchanges to joyful celebrations, every photograph is created with intention, care, and a deep respect for your story.
-      </p>
-      <a href="/bookOnilne.html" class="book-session">BOOK A SESSION <span>&#x2192;</span></a>
-    </div>
-  </section>
+    <section class="stats-strip">
+      <div><strong>9+</strong><span>Years</span></div>
+      <div><strong>150+</strong><span>Weddings</span></div>
+      <div><strong>12</strong><span>Countries</span></div>
+      <div><strong>98%</strong><span>Referral rate</span></div>
+    </section>
 
-  <!-- Portfolio Section  -->
-  <section class="gallery-section" id="Portfolio">
-    <div class="gallery-grid">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753792011/27_qnn8ii.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753792041/31_fpx1hd.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753790668/2_or5sa0.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753790460/1_r4zdvs.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753792410/41_zouz7d.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753792304/38_wdxbi1.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753792302/39_swe2pm.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753790761/16_r9pxhv.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753790660/3_q1zknh.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753790780/17_mfhdpe.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753792036/30_qtyqb6.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753792410/32_k4hpkx.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753792137/34_jwkjvb.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753792054/33_ku0p5r.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753790660/3_q1zknh.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753792410/32_k4hpkx.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753792005/21_xlds5c.jpg" alt="Gallery Image">
-      <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753790694/7_epymjx.jpg" alt="Gallery Image">
-    </div>
-  </section>
-  <!-- Contact -->
-  <div class="contact-section" id="Contact">
-  <div class="contact-form">
-    <h2>Let's talk</h2>
-    <hr>
+    <section class="about-section" id="About">
+      <div class="about-image" data-reveal>
+        <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_1000/v1753790776/21_srplns.webp" alt="Photographer portrait" loading="lazy" decoding="async">
+      </div>
+      <div class="about-text" data-reveal>
+        <span class="section-label">About</span>
+        <h2>Capturing love stories in a way that feels effortless.</h2>
+        <p>I create images that feel honest, cinematic, and deeply personal. Every frame is guided by calm direction, natural emotion, and a keen eye for detail.</p>
+        <p>From quiet portraits to joyful celebrations, my work preserves the atmosphere of your day so you can relive it for years to come.</p>
+        <a class="book-session" href="./bookOnilne.html">Book your session <span>→</span></a>
+      </div>
+    </section>
 
-    <p>
-      500 Lewusu offin st.<br>
-      San Francisco, CA 94158<br>
-      Ikd Lagos Nigeria<br><br>
+    <section class="approach-section">
+      <div class="section-heading" data-reveal>
+        <span class="section-label">Approach</span>
+        <h2>What makes the experience different</h2>
+      </div>
+      <div class="approach-grid">
+        <article class="approach-card" data-reveal>
+          <i class="fa-solid fa-heart"></i>
+          <h3>Intentional storytelling</h3>
+          <p>Every moment is documented with care so the emotion of your day stays intact.</p>
+        </article>
+        <article class="approach-card" data-reveal>
+          <i class="fa-solid fa-camera"></i>
+          <h3>Natural direction</h3>
+          <p>I guide you gently, keeping things relaxed so your real personality shows through.</p>
+        </article>
+        <article class="approach-card" data-reveal>
+          <i class="fa-solid fa-star"></i>
+          <h3>Timeless delivery</h3>
+          <p>Final images are curated beautifully for a gallery experience that feels premium.</p>
+        </article>
+      </div>
+    </section>
 
-      <a href="tel:+2347064837740">+234 706 483 7740</a><br>
-      <a href="mailto:ogbuefivictor076@gmail.com">ogbuefivictor076@gmail.com</a>
-    </p>
+    <section class="gallery-section" id="Portfolio">
+      <div class="section-heading" data-reveal>
+        <span class="section-label">Portfolio</span>
+        <h2>Featured moments</h2>
+      </div>
+      <div class="gallery-grid">
+        <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_800/v1753792011/27_qnn8ii.jpg" alt="Gallery image" data-reveal loading="lazy" decoding="async">
+        <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_800/v1753792041/31_fpx1hd.jpg" alt="Gallery image" data-reveal loading="lazy" decoding="async">
+        <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_800/v1753790668/2_or5sa0.jpg" alt="Gallery image" data-reveal loading="lazy" decoding="async">
+        <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_800/v1753790460/1_r4zdvs.jpg" alt="Gallery image" data-reveal loading="lazy" decoding="async">
+        <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_800/v1753792410/41_zouz7d.jpg" alt="Gallery image" data-reveal loading="lazy" decoding="async">
+        <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_800/v1753792304/38_wdxbi1.jpg" alt="Gallery image" data-reveal loading="lazy" decoding="async">
+        <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_800/v1753790761/16_r9pxhv.jpg" alt="Gallery image" data-reveal loading="lazy" decoding="async">
+        <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_800/v1753790660/3_q1zknh.jpg" alt="Gallery image" data-reveal loading="lazy" decoding="async">
+        <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_800/v1753790780/17_mfhdpe.jpg" alt="Gallery image" data-reveal loading="lazy" decoding="async">
+      </div>
+    </section>
 
-    <!-- 🔴 PASTE YOUR FORMSPREE LINK BELOW -->
-    <form 
-      action="https://formspree.io/f/xdaekblz" 
-      method="POST" 
-      id="contactForm"
-    >
-      <label>First Name *</label>
-      <input type="text" name="firstName" required>
+    <section class="contact-section" id="Contact">
+      <div class="contact-image" data-reveal>
+        <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/f_auto,q_auto,w_1000/v1753792302/35_qdtgf3.jpg" alt="Wedding scene" loading="lazy" decoding="async">
+      </div>
+      <div class="contact-panel" data-reveal>
+        <span class="section-label">Contact</span>
+        <h2>Let us plan your day</h2>
+        <p>Share the details of your celebration and I will be in touch with availability and next steps.</p>
+        <div class="contact-details">
+          <a href="tel:+2347064837740">+234 706 483 7740</a>
+          <a href="mailto:ogbuefivictor076@gmail.com">ogbuefivictor076@gmail.com</a>
+          <span>500 Lewusu Estate, Lagos, Nigeria</span>
+        </div>
+        <form id="contactForm">
+          <div class="form-row">
+            <input type="text" placeholder="First name" required>
+            <input type="text" placeholder="Last name" required>
+          </div>
+          <div class="form-row">
+            <input type="email" placeholder="Email address" required>
+            <input type="tel" placeholder="Phone number">
+          </div>
+          <textarea rows="5" placeholder="Tell me about your event"></textarea>
+          <button type="submit">Send inquiry</button>
+          <p class="form-note">I usually reply within 24 hours.</p>
+        </form>
+      </div>
+    </section>
+  </main>
 
-      <label>Last Name *</label>
-      <input type="text" name="lastName" required>
-
-      <label>Email *</label>
-      <input type="email" name="email" required>
-
-      <label>Message *</label>
-      <textarea name="message" required></textarea>
-
-      <button type="submit" id="sendBtn" style="width: 420px">
-        Send Message
-      </button>
-
-      <!-- Success Message -->
-      <p id="successMsg" style="
-        display:none;
-        margin-top:15px;
-        padding:12px;
-        background:#e6fffa;
-        color:#065f46;
-        border-radius:8px;
-        text-align:center;
-        font-weight:600;
-      ">
-        ✅ Message sent successfully!
-      </p>
-    </form>
-  </div>
-
-  <div class="contact-image">
-    <img src="https://res.cloudinary.com/dqmzeqrf3/image/upload/v1753790761/16_r9pxhv.jpg" alt="">
-  </div>
-</div>
-
-
-  <!-- Footer -->
   <footer class="site-footer">
-  <div class="footer-top">
-    <h2 class="footer-brand">CHARLOTTE McCOY</h2>
-    <p class="footer-tagline">
-      Wedding Photography • Timeless • Emotional • Honest
-    </p>
-
-    <div class="footer-socials">
-      <a href="#" aria-label="Facebook">M</a>
-      <a href="#" aria-label="Twitter">C</a>
-      <a href="#" aria-label="Pinterest">C</a>
-      <a href="#" aria-label="Instagram">O</a>
+    <div class="footer-top">
+      <h2>CHARLOTTE McCOY</h2>
+      <p>Wedding Photography • Timeless • Emotional • Honest</p>
     </div>
-  </div>
-
-  <div class="footer-links">
-    <div class="footer-col">
-      <h4>Explore</h4>
-      <a href="#">Home</a>
-      <a href="#About">About</a>
-      <a href="#Portfolio">Portfolio</a>
-      <a href="#Contact">Contact</a>
+    <div class="footer-links">
+      <div>
+        <h4>Navigate</h4>
+        <a href="./index.html">Home</a>
+        <a href="#About">About</a>
+        <a href="#Portfolio">Portfolio</a>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <a href="./services.html">Services</a>
+        <a href="./clientAlbum.html">Client albums</a>
+        <a href="./bookOnilne.html">Book online</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="tel:+2347064837740">+234 706 483 7740</a>
+        <a href="mailto:ogbuefivictor076@gmail.com">ogbuefivictor076@gmail.com</a>
+      </div>
     </div>
-
-    <div class="footer-col">
-      <h4>Clients</h4>
-      <a href="./clientAlbum.html">Client Albums</a>
-      <a href="./bookOnline.html">Book a Session</a>
-      <a href="#">Pricing</a>
+    <div class="footer-bottom">
+      <p>© 2035 Charlotte McCoy Photography</p>
     </div>
+  </footer>
 
-    <div class="footer-col">
-      <h4>Legal</h4>
-      <a href="#">Terms of Service</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Licensing</a>
-    </div>
+  <button class="back-to-top" id="backToTopBtn" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
 
-    
-  </div>
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    const backToTopBtn = document.getElementById('backToTopBtn');
 
-  <div class="footer-bottom">
-    <p>© 2035 Charlotte McCoy Photography. All rights reserved.</p>
-  </div>
-</footer>
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', function () {
+        navLinks.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+        document.body.classList.toggle('nav-open');
+      });
+      navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          navLinks.classList.remove('active');
+          menuToggle.classList.remove('active');
+          document.body.classList.remove('nav-open');
+        });
+      });
+    }
 
-<!-- Back to Top Button -->
-<button id="backToTopBtn" class="back-to-top" aria-label="Back to top">
-  <i class="fas fa-arrow-up"></i>
-</button>
+    const navbar = document.querySelector('.navbar');
+    if (navbar || backToTopBtn) {
+      var scrollTicking = false;
+      var updateScrollUI = function () {
+        var scrollY = window.scrollY;
+        if (navbar) navbar.classList.toggle('scrolled', scrollY > 10);
+        if (backToTopBtn) backToTopBtn.hidden = scrollY <= 300;
+        scrollTicking = false;
+      };
+      window.addEventListener('scroll', function () {
+        if (!scrollTicking) {
+          window.requestAnimationFrame(updateScrollUI);
+          scrollTicking = true;
+        }
+      }, { passive: true });
+      updateScrollUI();
+    }
 
+    if (backToTopBtn) {
+      backToTopBtn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    var revealItems = document.querySelectorAll('[data-reveal]');
+    if ('IntersectionObserver' in window && revealItems.length) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14 });
+
+      revealItems.forEach(function (item) {
+        observer.observe(item);
+      });
+    } else {
+      revealItems.forEach(function (item) {
+        item.classList.add('visible');
+      });
+    }
+  </script>
 </body>
-
 </html>

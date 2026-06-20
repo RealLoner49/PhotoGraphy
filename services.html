@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Services | Charlotte McCoy Photography</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="./services.css" />
+</head>
+<body>
+  <div class="page-loader" id="pageLoader" role="status" aria-live="polite" aria-label="Loading website">
+    <div class="page-loader__mark">CM</div>
+    <div class="page-loader__line"></div>
+    <span>Loading</span>
+  </div>
+  <script>
+    (function () {
+      var loader = document.getElementById('pageLoader');
+      function finishLoading() {
+        window.setTimeout(function () {
+          loader.classList.add('is-hidden');
+          window.setTimeout(function () { loader.remove(); }, 450);
+        }, 2500);
+      }
+      if (document.readyState === 'complete') finishLoading();
+      else window.addEventListener('load', finishLoading, { once: true });
+    }());
+  </script>
+  <header>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a class="logo" href="./index.html">CM Photography</a>
+        <div class="nav-actions">
+          <a class="nav-cta" href="./bookOnilne.html">Book now</a>
+          <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./index.html#About">About</a></li>
+        <li><a href="./index.html#Portfolio">Portfolio</a></li>
+        <li><a href="./index.html#Contact">Contact</a></li>
+        <li><a class="active" href="./services.html">Services</a></li>
+        <li><a href="./clientAlbum.html">Client Albums</a></li>
+        <li><a href="./bookOnilne.html">Book Online</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="service-hero">
+      <div class="service-hero-content">
+        <span class="section-label light">Photography services</span>
+        <h1>Designed for moments worth keeping.</h1>
+        <p>
+          Whether it’s an intimate wedding, a destination celebration, or a polished portrait session,
+          every package is crafted to deliver timeless imagery and a seamless experience.
+        </p>
+        <div class="hero-actions">
+          <a href="./bookOnilne.html" class="btn btn-primary">Book your date</a>
+          <a href="#packages" class="btn btn-secondary">Explore packages</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="service-overview">
+      <div class="overview-card">
+        <i class="fa-solid fa-ring"></i>
+        <h3>Weddings</h3>
+        <p>Full-day coverage with a documentary and editorial blend.</p>
+      </div>
+      <div class="overview-card">
+        <i class="fa-solid fa-camera-retro"></i>
+        <h3>Portraits</h3>
+        <p>Modern portraits that highlight confidence, personality, and beauty.</p>
+      </div>
+      <div class="overview-card">
+        <i class="fa-solid fa-location-dot"></i>
+        <h3>Destination</h3>
+        <p>Travel-ready storytelling for celebrations beyond the city.</p>
+      </div>
+    </section>
+
+    <section class="packages" id="packages">
+      <div class="packages-header">
+        <span class="section-label">Packages</span>
+        <h2>Choose the experience that fits your celebration.</h2>
+      </div>
+      <div class="package-grid">
+        <article class="package-card">
+          <p class="package-name">Signature</p>
+          <h3>₦50,000</h3>
+          <ul>
+            <li>4 hours of coverage</li>
+            <li>50 edited images</li>
+            <li>Online gallery</li>
+            <li>Highlight reel</li>
+          </ul>
+          <a href="./bookOnilne.html">Select package</a>
+        </article>
+
+        <article class="package-card featured">
+          <p class="package-name">Studio</p>
+          <h3>₦120,000</h3>
+          <ul>
+            <li>6 hours of coverage</li>
+            <li>120 edited images</li>
+            <li>Image delivery in 14 days</li>
+            <li>Two photographers</li>
+          </ul>
+          <a href="./bookOnilne.html">Most popular</a>
+        </article>
+
+        <article class="package-card">
+          <p class="package-name">Elite</p>
+          <h3>₦250,000</h3>
+          <ul>
+            <li>Full-day coverage</li>
+            <li>Unlimited edited images</li>
+            <li>RAW + JPG delivery</li>
+            <li>Wedding film add-on</li>
+          </ul>
+          <a href="./bookOnilne.html">Book now</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="process-section">
+      <div class="process-header">
+        <span class="section-label">Process</span>
+        <h2>How it works</h2>
+      </div>
+      <div class="process-grid">
+        <div>
+          <span>01</span>
+          <h3>Consultation</h3>
+          <p>We begin with a conversation about your story, style, and vision.</p>
+        </div>
+        <div>
+          <span>02</span>
+          <h3>Planning</h3>
+          <p>Timeline details, location scouting, and creative direction are mapped out.</p>
+        </div>
+        <div>
+          <span>03</span>
+          <h3>Capture</h3>
+          <p>Your event is documented with care, patience, and an unobtrusive approach.</p>
+        </div>
+        <div>
+          <span>04</span>
+          <h3>Delivery</h3>
+          <p>Final images are delivered in a beautifully curated gallery.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-banner">
+      <h2>Ready to create something unforgettable?</h2>
+      <a href="./bookOnilne.html">Start your inquiry</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <h2 class="footer-brand">CHARLOTTE McCOY</h2>
+      <p class="footer-tagline">Wedding Photography • Timeless • Emotional • Honest</p>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2035 Charlotte McCoy Photography</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+        document.body.classList.toggle('nav-open');
+      });
+
+      navLinks.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('active');
+          menuToggle.classList.remove('active');
+          document.body.classList.remove('nav-open');
+        });
+      });
+    }
+
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+      const toggleNavbar = () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 10);
+      };
+      window.addEventListener('scroll', toggleNavbar, { passive: true });
+      toggleNavbar();
+    }
+  </script>
+</body>
+</html>
