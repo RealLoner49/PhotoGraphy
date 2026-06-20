@@ -436,6 +436,7 @@ section {
   grid-template-columns: 1.1fr 0.9fr;
   gap: 2rem;
   align-items: center;
+  scroll-margin-top: 7rem;
 }
 
 /* Keeps off-screen sections out of layout and paint work until they approach view. */
@@ -487,6 +488,10 @@ section {
 .gallery-section {
   width: min(1120px, 92%);
   margin: 0 auto 5rem;
+}
+
+.gallery-section {
+  scroll-margin-top: 7rem;
 }
 
 .section-heading {
@@ -552,6 +557,7 @@ section {
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   align-items: stretch;
+  scroll-margin-top: 7rem;
 }
 
 .contact-image img {
@@ -781,7 +787,16 @@ button:hover {
   .nav-links a {
     display: block;
     width: 100%;
-    padding: 0.15rem 0;
+    padding: 0.55rem 0.35rem;
+    color: var(--text) !important;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--accent) !important;
   }
 
   .nav-links a::after,
@@ -809,6 +824,10 @@ button:hover {
 }
 
 @media (max-width: 640px) {
+  .nav-container {
+    padding: 0.85rem 0;
+  }
+
   .logo {
     letter-spacing: 0.22em;
     font-size: 0.78rem;
@@ -825,15 +844,58 @@ button:hover {
   }
 
   .hero {
-    min-height: 84vh;
+    min-height: 100svh;
+    padding: 6.5rem 0.85rem 4rem;
+  }
+
+  .hero-content {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .hero .section-label {
+    max-width: 100%;
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    line-height: 1.5;
   }
 
   .hero-content h1 {
-    letter-spacing: 0.1em;
+    font-size: clamp(2.65rem, 12vw, 3.25rem);
+    line-height: 0.98;
+    letter-spacing: 0.07em;
+    overflow-wrap: anywhere;
+  }
+
+  .hero-content p {
+    max-width: 300px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 0.76rem;
+    line-height: 1.55;
+    letter-spacing: 0.12em;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .hero-actions .btn {
+    width: min(100%, 260px);
   }
 
   .stats-strip {
+    width: min(94%, 420px);
+    gap: 1.15rem 0.5rem;
+    padding: 1.25rem 0.75rem;
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stats-strip span {
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
   }
 
   .approach-grid,
