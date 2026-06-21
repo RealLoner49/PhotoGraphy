@@ -542,7 +542,16 @@ img {
   .nav-links a {
     display: block;
     width: 100%;
-    padding: 0.15rem 0;
+    padding: 0.55rem 0.35rem;
+    color: #1b1b1b !important;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: #7a6a58 !important;
   }
 
   .nav-links a::after,
@@ -565,8 +574,9 @@ img {
   }
 
   .service-hero {
-    min-height: 78vh;
+    min-height: clamp(620px, 78svh, 720px);
     padding-top: 7rem;
+    background-position: 58% center;
   }
 
   .service-overview,

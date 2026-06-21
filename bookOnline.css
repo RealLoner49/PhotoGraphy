@@ -529,7 +529,16 @@ a {
   .nav-links a {
     display: block;
     width: 100%;
-    padding: 0.15rem 0;
+    padding: 0.55rem 0.35rem;
+    color: var(--text) !important;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    color: var(--accent) !important;
   }
 
   .nav-links a::after,
